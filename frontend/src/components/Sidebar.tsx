@@ -27,7 +27,8 @@ export default function Sidebar() {
         </li>
 
         <li className="flex items-center gap-3 hover:text-green-400 cursor-pointer">
-          <Wallet size={18}/> Budgets
+          <Wallet size={18}/>
+          <Link to="/budgets">Budgets</Link>
         </li>
 
         <li className="flex items-center gap-3 hover:text-green-400 cursor-pointer">

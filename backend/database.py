@@ -2,12 +2,26 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "sqlite:///./finance.db"
+DATABASE_URL = "sqlite:///./test.db"   # or your DB
 
 engine = create_engine(
-    DATABASE_URL, connect_args={"check_same_thread": False}
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}  # needed for SQLite
 )
 
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
 
 Base = declarative_base()
+
+
+# ✅ THIS IS MISSING IN YOUR FILE
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

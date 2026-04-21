@@ -4,7 +4,7 @@ import os
 
 router = APIRouter()
 
-API_KEY = "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"
+API_KEY = "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"
 
 @router.post("/parse")
 def parse_expense(data: dict):
@@ -44,6 +44,17 @@ def parse_expense(data: dict):
     )
 
     result = response.json()
+
+    # DEBUG (very important)
+    print("OPENROUTER RESPONSE:", result)
+
+    # SAFE parsing
+    if "choices" not in result:
+        return {
+            "error": "AI response failed",
+            "details": result
+        }
+
     content = result["choices"][0]["message"]["content"]
 
     return {"result": content}

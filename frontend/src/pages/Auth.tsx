@@ -91,6 +91,7 @@ export function Login() {
                 });
 
                 const data = await res.json();
+                console.log("LOGIN RESPONSE:", data);
 
                 if (res.ok) {
                 localStorage.setItem("token", data.access_token);
@@ -116,6 +117,8 @@ export function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  
   return (
     <div className="flex h-screen bg-[#020617] text-white">
       <LeftPanel isSignup={true} />
@@ -131,7 +134,12 @@ export function Signup() {
           <Input type="email" placeholder="Email" value={email} onChange={(e:any)=>setEmail(e.target.value)} />
           <Input type="password" placeholder="Password" value={password} onChange={(e:any)=>setPassword(e.target.value)} />
 
-          <Input type="password" placeholder="Confirm Password" />
+          <Input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e: any) => setConfirmPassword(e.target.value)}
+          />
 
           <p className="text-sm text-gray-500">Must be at least 8 characters</p>
 
@@ -141,6 +149,11 @@ export function Signup() {
           <button
             className="w-full h-12 bg-emerald-500 rounded-xl font-semibold"
             onClick={async () => {
+
+                if (password !== confirmPassword) {
+                  alert("Passwords do not match");
+                  return;
+                }
                 const res = await fetch("http://127.0.0.1:8000/auth/signup", {
                 method: "POST",
                 headers: {

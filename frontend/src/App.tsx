@@ -4,6 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Analytics from "./pages/Analytics";
+import Budgets from "./pages/Budgets";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import ChatbotWidget from "./components/ChatbotWidget";
@@ -32,8 +33,6 @@ function App() {
 
                 <div className="flex-1">
                   <Navbar />
-                  
-                  {/* 👇 THIS IS IMPORTANT */}
                   <Outlet />
                 </div>
 
@@ -42,7 +41,6 @@ function App() {
             </ProtectedRoute>
           }
         >
-          {/* 👇 CHILD ROUTES */}
           <Route
             index
             element={
@@ -67,8 +65,14 @@ function App() {
             path="analytics"
             element={<Analytics transactions={transactions} />}
           />
+
+          {/* ✅ FIXED */}
+          <Route path="budgets" element={
+            <Budgets transactions={transactions} />
+          } /> 
         </Route>
 
+            
       </Routes>
     </Router>
   );
